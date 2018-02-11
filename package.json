@@ -1,0 +1,23 @@
+{
+  "name": "olegturbal.github.io",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "npx babel src --out-dir js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/OlegTurbal/olegturbal.github.io.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/OlegTurbal/olegturbal.github.io/issues"
+  },
+  "homepage": "https://github.com/OlegTurbal/olegturbal.github.io#readme",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.6.1"
+  }
+}

@@ -1,14 +1,12 @@
-fetch(' https://newsapi.org/v1/articles?source=bbc-news&apiKey=7b670b164aa941c88eef1d1350fa4296')
-  .then(function(response) {
-    return response.json();
-   })
-  .then(function(response) {
-    const articles = response['articles'];
-    let content = '';
-    articles.forEach(function(article) {
-      let date = new Date(article.publishedAt);
-      
-      content += `
+fetch(' https://newsapi.org/v1/articles?source=bbc-news&apiKey=7b670b164aa941c88eef1d1350fa4296').then(function (response) {
+  return response.json();
+}).then(function (response) {
+  const articles = response['articles'];
+  let content = '';
+  articles.forEach(function (article) {
+    let date = new Date(article.publishedAt);
+
+    content += `
         <div class="row mt-3">
           <div class="media">
             <div class="col-4">
@@ -27,6 +25,6 @@ fetch(' https://newsapi.org/v1/articles?source=bbc-news&apiKey=7b670b164aa941c88
           </div>
         </div>
         `;
-    });
-    document.getElementById('feed').innerHTML = content;
   });
+  document.getElementById('feed').innerHTML = content;
+});
