@@ -1,12 +1,10 @@
 window.fetch('https://newsapi.org/v1/articles?source=bbc-news&apiKey=7b670b164aa941c88eef1d1350fa4296')
+  .then(response => response.json())
   .then(function(response) {
-    return response.json();
-   })
-  .then(function(response) {
-    const articles = response['articles'];
+    const { articles } = response;
     let content = '';
     articles.forEach(function(article) {
-      let date = new Date(article.publishedAt);
+      const date = new Date(article.publishedAt);
       
       content += `
         <div class="row mt-3">
