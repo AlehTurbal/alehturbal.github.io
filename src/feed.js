@@ -1,3 +1,5 @@
+var Promise = require('es6-promise').Promise;
+
 window.fetch('https://newsapi.org/v1/articles?source=bbc-news&apiKey=7b670b164aa941c88eef1d1350fa4296')
   .then(response => response.json())
   .then(function(response) {
