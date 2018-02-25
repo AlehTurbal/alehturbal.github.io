@@ -19,8 +19,5 @@ module.exports = {
           }
         }
       }
-  ]},
-  plugins: [
-    new MinifyPlugin()
-  ]
+  ]}
 };
