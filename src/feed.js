@@ -5,7 +5,7 @@ window.fetch('https://newsapi.org/v1/articles?source=bbc-news&apiKey=7b670b164aa
     const { articles } = response;
     let content = '';
     articles.forEach(function(element) {
-      const article = new Article(element);
+      const article = new ArticleDecorator(new Article(element));
       
       content += `
         <div class="row mt-3">
@@ -17,7 +17,7 @@ window.fetch('https://newsapi.org/v1/articles?source=bbc-news&apiKey=7b670b164aa
             </div> 
             <div class="media-body col-8">
               <h5>${article.title}</h5>
-              <div class="mb-3">${article.description}</div>
+              <div class="mb-3">${article.date}</div>
               <div>
                 ${article.description}
                 <a href=${article.url}>>></a>
@@ -38,6 +38,21 @@ function Article(article) {
   this.title = article.title;
   this.publishedAt = article.publishedAt;
   this.description = article.description;
+}
+
+
+// decorator
+function ArticleDecorator(article) {
+  this.url = article.url;
+  this.urlToImage = article.urlToImage;
+  this.title = article.title;
+  this.description = article.description;
+  this.publishedAt = article.publishedAt;
+
+  this.date = (function() {
+    const date = new Date(article.publishedAt);
+    return date.toLocaleDateString();
+  })();
 }
 
 feed();

@@ -568,9 +568,9 @@ function feed() {
 
     var content = '';
     articles.forEach(function (element) {
-      var article = new Article(element);
+      var article = new ArticleDecorator(new Article(element));
 
-      content += '\n        <div class="row mt-3">\n          <div class="media">\n            <div class="col-4">\n              <a href=' + article.url + '>\n                <img src=' + article.urlToImage + ' width=\'100%\'>\n              </a>\n            </div> \n            <div class="media-body col-8">\n              <h5>' + article.title + '</h5>\n              <div class="mb-3">' + article.description + '</div>\n              <div>\n                ' + article.description + '\n                <a href=' + article.url + '>>></a>\n              </div>\n            </div>\n          </div>\n        </div>\n        ';
+      content += '\n        <div class="row mt-3">\n          <div class="media">\n            <div class="col-4">\n              <a href=' + article.url + '>\n                <img src=' + article.urlToImage + ' width=\'100%\'>\n              </a>\n            </div> \n            <div class="media-body col-8">\n              <h5>' + article.title + '</h5>\n              <div class="mb-3">' + article.date + '</div>\n              <div>\n                ' + article.description + '\n                <a href=' + article.url + '>>></a>\n              </div>\n            </div>\n          </div>\n        </div>\n        ';
     });
     document.getElementById('feed').innerHTML = content;
   });
@@ -583,6 +583,20 @@ function Article(article) {
   this.title = article.title;
   this.publishedAt = article.publishedAt;
   this.description = article.description;
+}
+
+// decorator
+function ArticleDecorator(article) {
+  this.url = article.url;
+  this.urlToImage = article.urlToImage;
+  this.title = article.title;
+  this.description = article.description;
+  this.publishedAt = article.publishedAt;
+
+  this.date = function () {
+    var date = new Date(article.publishedAt);
+    return date.toLocaleDateString();
+  }();
 }
 
 feed();
