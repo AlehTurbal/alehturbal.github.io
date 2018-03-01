@@ -1,23 +1,10 @@
 const path = require('path');
+const merge = require('webpack-merge');
 const MinifyPlugin = require("babel-minify-webpack-plugin");
+const baseConfig = require('./webpack.base.js');
 
-module.exports = {
-  entry: ['whatwg-fetch', './src/bundle.js'],
-  output: {
-    filename: 'bundle.js',
-    path: path.resolve(__dirname, 'js')
-  },
-  module: {
-    rules: [
-      {
-        test: /\.js$/,
-        exclude: /node_modules/,
-        use: {
-          loader: 'babel-loader',
-          options: {
-            presets: ['env']
-          }
-        }
-      }
-  ]}
-};
+module.exports = merge(baseConfig, {
+  plugins: [ 
+    new MinifyPlugin() 
+  ]
+});
