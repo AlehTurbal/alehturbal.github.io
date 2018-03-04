@@ -1,7 +1,7 @@
 const path = require('path');
 
 module.exports = {
-  entry: ['whatwg-fetch', './src/bundle.js'],
+  entry: ['./src/base.css', 'whatwg-fetch', './src/bundle.js'],
   output: {
     filename: 'bundle.js',
     path: path.resolve(__dirname, 'js'),
@@ -18,6 +18,10 @@ module.exports = {
             presets: ['env']
           }
         }
+      },
+      {
+        test: /\.css$/,
+        use: [ 'style-loader', 'css-loader' ]
       }
   ]}
 };

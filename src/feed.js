@@ -1,3 +1,4 @@
+import css from './base.css';
 
 module.exports = function() {
   window.fetch('https://newsapi.org/v1/articles?source=bbc-news&apiKey=7b670b164aa941c88eef1d1350fa4296')
