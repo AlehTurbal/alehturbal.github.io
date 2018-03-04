@@ -1,1 +1,643 @@
-(function(a){function b(d){if(c[d])return c[d].exports;var e=c[d]={i:d,l:!1,exports:{}};return a[d].call(e.exports,e,e.exports,b),e.l=!0,e.exports}var c={};return b.m=a,b.c=c,b.d=function(a,c,d){b.o(a,c)||Object.defineProperty(a,c,{configurable:!1,enumerable:!0,get:d})},b.n=function(a){var c=a&&a.__esModule?function(){return a['default']}:function(){return a};return b.d(c,'a',c),c},b.o=function(a,b){return Object.prototype.hasOwnProperty.call(a,b)},b.p='',b(b.s=0)})([function(a,b,c){c(1),a.exports=c(2)},function(){(function(a){'use strict';function b(a){if('string'!=typeof a&&(a+=''),/[^a-z0-9\-#$%&'*+.\^_`|~]/i.test(a))throw new TypeError('Invalid character in header field name');return a.toLowerCase()}function c(a){return'string'!=typeof a&&(a+=''),a}function d(a){var b={next:function(){var b=a.shift();return{done:void 0===b,value:b}}};return r.iterable&&(b[Symbol.iterator]=function(){return b}),b}function e(a){this.map={},a instanceof e?a.forEach(function(a,b){this.append(b,a)},this):Array.isArray(a)?a.forEach(function(a){this.append(a[0],a[1])},this):a&&Object.getOwnPropertyNames(a).forEach(function(b){this.append(b,a[b])},this)}function f(a){return a.bodyUsed?Promise.reject(new TypeError('Already read')):void(a.bodyUsed=!0)}function g(a){return new Promise(function(b,c){a.onload=function(){b(a.result)},a.onerror=function(){c(a.error)}})}function h(a){var b=new FileReader,c=g(b);return b.readAsArrayBuffer(a),c}function i(a){var b=new FileReader,c=g(b);return b.readAsText(a),c}function j(a){for(var b=new Uint8Array(a),c=Array(b.length),d=0;d<b.length;d++)c[d]=String.fromCharCode(b[d]);return c.join('')}function k(a){if(a.slice)return a.slice(0);var b=new Uint8Array(a.byteLength);return b.set(new Uint8Array(a)),b.buffer}function l(){return this.bodyUsed=!1,this._initBody=function(a){if(this._bodyInit=a,!a)this._bodyText='';else if('string'==typeof a)this._bodyText=a;else if(r.blob&&Blob.prototype.isPrototypeOf(a))this._bodyBlob=a;else if(r.formData&&FormData.prototype.isPrototypeOf(a))this._bodyFormData=a;else if(r.searchParams&&URLSearchParams.prototype.isPrototypeOf(a))this._bodyText=a.toString();else if(r.arrayBuffer&&r.blob&&t(a))this._bodyArrayBuffer=k(a.buffer),this._bodyInit=new Blob([this._bodyArrayBuffer]);else if(r.arrayBuffer&&(ArrayBuffer.prototype.isPrototypeOf(a)||u(a)))this._bodyArrayBuffer=k(a);else throw new Error('unsupported BodyInit type');this.headers.get('content-type')||('string'==typeof a?this.headers.set('content-type','text/plain;charset=UTF-8'):this._bodyBlob&&this._bodyBlob.type?this.headers.set('content-type',this._bodyBlob.type):r.searchParams&&URLSearchParams.prototype.isPrototypeOf(a)&&this.headers.set('content-type','application/x-www-form-urlencoded;charset=UTF-8'))},r.blob&&(this.blob=function(){var a=f(this);if(a)return a;if(this._bodyBlob)return Promise.resolve(this._bodyBlob);if(this._bodyArrayBuffer)return Promise.resolve(new Blob([this._bodyArrayBuffer]));if(this._bodyFormData)throw new Error('could not read FormData body as blob');else return Promise.resolve(new Blob([this._bodyText]))},this.arrayBuffer=function(){return this._bodyArrayBuffer?f(this)||Promise.resolve(this._bodyArrayBuffer):this.blob().then(h)}),this.text=function(){var a=f(this);if(a)return a;if(this._bodyBlob)return i(this._bodyBlob);if(this._bodyArrayBuffer)return Promise.resolve(j(this._bodyArrayBuffer));if(this._bodyFormData)throw new Error('could not read FormData body as text');else return Promise.resolve(this._bodyText)},r.formData&&(this.formData=function(){return this.text().then(o)}),this.json=function(){return this.text().then(JSON.parse)},this}function m(a){var b=a.toUpperCase();return-1<v.indexOf(b)?b:a}function n(a,b){b=b||{};var c=b.body;if(a instanceof n){if(a.bodyUsed)throw new TypeError('Already read');this.url=a.url,this.credentials=a.credentials,b.headers||(this.headers=new e(a.headers)),this.method=a.method,this.mode=a.mode,c||null==a._bodyInit||(c=a._bodyInit,a.bodyUsed=!0)}else this.url=a+'';if(this.credentials=b.credentials||this.credentials||'omit',(b.headers||!this.headers)&&(this.headers=new e(b.headers)),this.method=m(b.method||this.method||'GET'),this.mode=b.mode||this.mode||null,this.referrer=null,('GET'===this.method||'HEAD'===this.method)&&c)throw new TypeError('Body not allowed for GET or HEAD requests');this._initBody(c)}function o(a){var b=new FormData;return a.trim().split('&').forEach(function(a){if(a){var c=a.split('='),d=c.shift().replace(/\+/g,' '),e=c.join('=').replace(/\+/g,' ');b.append(decodeURIComponent(d),decodeURIComponent(e))}}),b}function p(a){var b=new e;return a.split(/\r?\n/).forEach(function(a){var c=a.split(':'),d=c.shift().trim();if(d){var e=c.join(':').trim();b.append(d,e)}}),b}function q(a,b){b||(b={}),this.type='default',this.status='status'in b?b.status:200,this.ok=200<=this.status&&300>this.status,this.statusText='statusText'in b?b.statusText:'OK',this.headers=new e(b.headers),this.url=b.url||'',this._initBody(a)}if(!a.fetch){var r={searchParams:'URLSearchParams'in a,iterable:'Symbol'in a&&'iterator'in Symbol,blob:'FileReader'in a&&'Blob'in a&&function(){try{return new Blob,!0}catch(a){return!1}}(),formData:'FormData'in a,arrayBuffer:'ArrayBuffer'in a};if(r.arrayBuffer)var s=['[object Int8Array]','[object Uint8Array]','[object Uint8ClampedArray]','[object Int16Array]','[object Uint16Array]','[object Int32Array]','[object Uint32Array]','[object Float32Array]','[object Float64Array]'],t=function(a){return a&&DataView.prototype.isPrototypeOf(a)},u=ArrayBuffer.isView||function(a){return a&&-1<s.indexOf(Object.prototype.toString.call(a))};e.prototype.append=function(a,d){a=b(a),d=c(d);var e=this.map[a];this.map[a]=e?e+','+d:d},e.prototype['delete']=function(a){delete this.map[b(a)]},e.prototype.get=function(a){return a=b(a),this.has(a)?this.map[a]:null},e.prototype.has=function(a){return this.map.hasOwnProperty(b(a))},e.prototype.set=function(a,d){this.map[b(a)]=c(d)},e.prototype.forEach=function(a,b){for(var c in this.map)this.map.hasOwnProperty(c)&&a.call(b,this.map[c],c,this)},e.prototype.keys=function(){var a=[];return this.forEach(function(b,c){a.push(c)}),d(a)},e.prototype.values=function(){var a=[];return this.forEach(function(b){a.push(b)}),d(a)},e.prototype.entries=function(){var a=[];return this.forEach(function(b,c){a.push([c,b])}),d(a)},r.iterable&&(e.prototype[Symbol.iterator]=e.prototype.entries);var v=['DELETE','GET','HEAD','OPTIONS','POST','PUT'];n.prototype.clone=function(){return new n(this,{body:this._bodyInit})},l.call(n.prototype),l.call(q.prototype),q.prototype.clone=function(){return new q(this._bodyInit,{status:this.status,statusText:this.statusText,headers:new e(this.headers),url:this.url})},q.error=function(){var a=new q(null,{status:0,statusText:''});return a.type='error',a};var w=[301,302,303,307,308];q.redirect=function(a,b){if(-1===w.indexOf(b))throw new RangeError('Invalid status code');return new q(null,{status:b,headers:{location:a}})},a.Headers=e,a.Request=n,a.Response=q,a.fetch=function(a,b){return new Promise(function(c,d){var e=new n(a,b),f=new XMLHttpRequest;f.onload=function(){var a={status:f.status,statusText:f.statusText,headers:p(f.getAllResponseHeaders()||'')};a.url='responseURL'in f?f.responseURL:a.headers.get('X-Request-URL');var b='response'in f?f.response:f.responseText;c(new q(b,a))},f.onerror=function(){d(new TypeError('Network request failed'))},f.ontimeout=function(){d(new TypeError('Network request failed'))},f.open(e.method,e.url,!0),'include'===e.credentials&&(f.withCredentials=!0),'responseType'in f&&r.blob&&(f.responseType='blob'),e.headers.forEach(function(a,b){f.setRequestHeader(b,a)}),f.send('undefined'==typeof e._bodyInit?null:e._bodyInit)})},a.fetch.polyfill=!0}})('undefined'==typeof self?this:self)},function(a,b,c){'use strict';var d=c(3),e=c(4).Promise},function(a,b){'use strict';function c(){window.fetch('https://newsapi.org/v1/articles?source=bbc-news&apiKey=7b670b164aa941c88eef1d1350fa4296').then(function(a){return a.json()}).then(function(a){var b=a.articles,c='';b.forEach(function(a){var b=new e(new d(a));c+='\n        <div class="row mt-3">\n          <div class="media">\n            <div class="col-4">\n              <a href='+b.url+'>\n                <img src='+b.urlToImage+' width=\'100%\'>\n              </a>\n            </div> \n            <div class="media-body col-8">\n              <h5>'+b.title+'</h5>\n              <div class="mb-3">'+b.date+'</div>\n              <div>\n                '+b.description+'\n                <a href='+b.url+'>>></a>\n              </div>\n            </div>\n          </div>\n        </div>\n        '}),document.getElementById('feed').innerHTML=c})}function d(a){this.url=a.url,this.urlToImage=a.urlToImage,this.title=a.title,this.publishedAt=a.publishedAt,this.description=a.description}function e(a){this.url=a.url,this.urlToImage=a.urlToImage,this.title=a.title,this.description=a.description,this.publishedAt=a.publishedAt,this.date=function(){var b=new Date(a.publishedAt);return b.toLocaleDateString()}()}Object.defineProperty(b,'__esModule',{value:!0}),b.feed=c,c()},function(a,b,c){(function(b,c){(function(b,c){a.exports=c()})(this,function(){'use strict';function a(a){var b=typeof a;return null!==a&&('object'==b||'function'==b)}function d(a){return'function'==typeof a}function e(){return'undefined'==typeof G?f():function(){G(g)}}function f(){var a=setTimeout;return function(){return a(g,1)}}function g(){for(var a=0;a<K;a+=2){var b=R[a],c=R[a+1];b(c),R[a]=void 0,R[a+1]=void 0}K=0}function h(a,b){var c=this,d=new this.constructor(k);void 0===d[T]&&B(d);var e=c._state;if(e){var f=arguments[e-1];L(function(){return y(e,d,f,c._result)})}else v(c,d,a,b);return d}function j(a){var b=this;if(a&&'object'==typeof a&&a.constructor===b)return a;var c=new b(k);return r(c,a),c}function k(){}function i(){return new TypeError('You cannot resolve a promise with itself')}function l(){return new TypeError('A promises callback cannot return that same promise.')}function m(a){try{return a.then}catch(a){return W.error=a,W}}function n(a,b,c,d){try{a.call(b,c,d)}catch(a){return a}}function o(a,b,c){L(function(a){var d=!1,e=n(c,b,function(c){d||(d=!0,b===c?t(a,c):r(a,c))},function(b){d||(d=!0,u(a,b))},'Settle: '+(a._label||' unknown promise'));!d&&e&&(d=!0,u(a,e))},a)}function p(a,b){b._state===U?t(a,b._result):b._state===V?u(a,b._result):v(b,void 0,function(b){return r(a,b)},function(b){return u(a,b)})}function q(a,b,c){b.constructor===a.constructor&&c===h&&b.constructor.resolve===j?p(a,b):c===W?(u(a,W.error),W.error=null):void 0===c?t(a,b):d(c)?o(a,b,c):t(a,b)}function r(b,c){b===c?u(b,i()):a(c)?q(b,c,m(c)):t(b,c)}function s(a){a._onerror&&a._onerror(a._result),w(a)}function t(a,b){a._state!==S||(a._result=b,a._state=U,0!==a._subscribers.length&&L(w,a))}function u(a,b){a._state!==S||(a._state=V,a._result=b,L(s,a))}function v(a,b,c,d){var e=a._subscribers,f=e.length;a._onerror=null,e[f]=b,e[f+U]=c,e[f+V]=d,0===f&&a._state&&L(w,a)}function w(a){var b=a._subscribers,c=a._state;if(0!==b.length){for(var d=void 0,e=void 0,f=a._result,g=0;g<b.length;g+=3)d=b[g],e=b[g+c],d?y(c,d,e,f):e(f);a._subscribers.length=0}}function x(a,b){try{return a(b)}catch(a){return W.error=a,W}}function y(a,b,c,e){var f,g,h,i,j=d(c);if(!j)f=e,h=!0;else if(f=x(c,e),f===W?(i=!0,g=f.error,f.error=null):h=!0,b===f)return void u(b,l());b._state!==S||(j&&h?r(b,f):i?u(b,g):a===U?t(b,f):a===V&&u(b,f))}function z(a,b){try{b(function(b){r(a,b)},function(b){u(a,b)})}catch(b){u(a,b)}}function A(){return X++}function B(a){a[T]=X++,a._state=void 0,a._result=void 0,a._subscribers=[]}function C(){return new Error('Array Methods must be provided an Array')}function D(){throw new TypeError('You must pass a resolver function as the first argument to the promise constructor')}function E(){throw new TypeError('Failed to construct \'Promise\': Please use the \'new\' operator, this object constructor cannot be called as a function.')}var F=Array.isArray?Array.isArray:function(a){return'[object Array]'===Object.prototype.toString.call(a)};var G,H,I,J=F,K=0,L=function(a,b){R[K]=a,R[K+1]=b,K+=2,2==K&&(H?H(g):I())},M='undefined'==typeof window?void 0:window,N=M||{},O=N.MutationObserver||N.WebKitMutationObserver,P='undefined'==typeof self&&'undefined'!=typeof b&&'[object process]'==={}.toString.call(b),Q='undefined'!=typeof Uint8ClampedArray&&'undefined'!=typeof importScripts&&'undefined'!=typeof MessageChannel,R=Array(1e3);I=P?function(){return function(){return b.nextTick(g)}}():O?function(){var a=0,b=new O(g),c=document.createTextNode('');return b.observe(c,{characterData:!0}),function(){c.data=a=++a%2}}():Q?function(){var a=new MessageChannel;return a.port1.onmessage=g,function(){return a.port2.postMessage(0)}}():void 0!==M||0?f():function(){try{var a=Function('return this')().require('vertx');return G=a.runOnLoop||a.runOnContext,e()}catch(a){return f()}}();var S,T=Math.random().toString(36).substring(2),U=1,V=2,W={error:null},X=0,Y=function(){function a(a,b){this._instanceConstructor=a,this.promise=new a(k),this.promise[T]||B(this.promise),J(b)?(this.length=b.length,this._remaining=b.length,this._result=Array(this.length),0===this.length?t(this.promise,this._result):(this.length=this.length||0,this._enumerate(b),0===this._remaining&&t(this.promise,this._result))):u(this.promise,C())}return a.prototype._enumerate=function(a){for(var b=0;this._state===S&&b<a.length;b++)this._eachEntry(a[b],b)},a.prototype._eachEntry=function(a,b){var d=this._instanceConstructor,c=d.resolve;if(c===j){var e=m(a);if(e===h&&a._state!==S)this._settledAt(a._state,b,a._result);else if('function'!=typeof e)this._remaining--,this._result[b]=a;else if(d===Z){var f=new d(k);q(f,a,e),this._willSettleAt(f,b)}else this._willSettleAt(new d(function(b){return b(a)}),b)}else this._willSettleAt(c(a),b)},a.prototype._settledAt=function(a,b,c){var d=this.promise;d._state===S&&(this._remaining--,a===V?u(d,c):this._result[b]=c),0===this._remaining&&t(d,this._result)},a.prototype._willSettleAt=function(a,b){var c=this;v(a,void 0,function(a){return c._settledAt(U,b,a)},function(a){return c._settledAt(V,b,a)})},a}(),Z=function(){function a(b){this[T]=A(),this._result=this._state=void 0,this._subscribers=[],k!==b&&('function'!=typeof b&&D(),this instanceof a?z(this,b):E())}return a.prototype.catch=function(a){return this.then(null,a)},a.prototype.finally=function(a){var b=this,c=b.constructor;return b.then(function(b){return c.resolve(a()).then(function(){return b})},function(b){return c.resolve(a()).then(function(){throw b})})},a}();return Z.prototype.then=h,Z.all=function(a){return new Y(this,a).promise},Z.race=function(a){var b=this;return J(a)?new b(function(c,d){for(var e=a.length,f=0;f<e;f++)b.resolve(a[f]).then(c,d)}):new b(function(a,b){return b(new TypeError('You must pass an array to race.'))})},Z.resolve=j,Z.reject=function(a){var b=this,c=new b(k);return u(c,a),c},Z._setScheduler=function(a){H=a},Z._setAsap=function(a){L=a},Z._asap=L,Z.polyfill=function(){var a;if('undefined'!=typeof c)a=c;else if('undefined'!=typeof self)a=self;else try{a=Function('return this')()}catch(a){throw new Error('polyfill failed because global object is unavailable in this environment')}var b=a.Promise;if(b){var d=null;try{d=Object.prototype.toString.call(b.resolve())}catch(a){}if('[object Promise]'===d&&!b.cast)return}a.Promise=Z},Z.Promise=Z,Z})}).call(b,c(5),c(6))},function(a){function b(){throw new Error('setTimeout has not been defined')}function c(){throw new Error('clearTimeout has not been defined')}function d(a){if(j===setTimeout)return setTimeout(a,0);if((j===b||!j)&&setTimeout)return j=setTimeout,setTimeout(a,0);try{return j(a,0)}catch(b){try{return j.call(null,a,0)}catch(b){return j.call(this,a,0)}}}function e(a){if(k===clearTimeout)return clearTimeout(a);if((k===c||!k)&&clearTimeout)return k=clearTimeout,clearTimeout(a);try{return k(a)}catch(b){try{return k.call(null,a)}catch(b){return k.call(this,a)}}}function f(){o&&m&&(o=!1,m.length?n=m.concat(n):p=-1,n.length&&g())}function g(){if(!o){var a=d(f);o=!0;for(var b=n.length;b;){for(m=n,n=[];++p<b;)m&&m[p].run();p=-1,b=n.length}m=null,o=!1,e(a)}}function h(a,b){this.fun=a,this.array=b}function i(){}var j,k,l=a.exports={};(function(){try{j='function'==typeof setTimeout?setTimeout:b}catch(a){j=b}try{k='function'==typeof clearTimeout?clearTimeout:c}catch(a){k=c}})();var m,n=[],o=!1,p=-1;l.nextTick=function(a){var b=Array(arguments.length-1);if(1<arguments.length)for(var c=1;c<arguments.length;c++)b[c-1]=arguments[c];n.push(new h(a,b)),1!==n.length||o||d(g)},h.prototype.run=function(){this.fun.apply(null,this.array)},l.title='browser',l.browser=!0,l.env={},l.argv=[],l.version='',l.versions={},l.on=i,l.addListener=i,l.once=i,l.off=i,l.removeListener=i,l.removeAllListeners=i,l.emit=i,l.prependListener=i,l.prependOnceListener=i,l.listeners=function(){return[]},l.binding=function(){throw new Error('process.binding is not supported')},l.cwd=function(){return'/'},l.chdir=function(){throw new Error('process.chdir is not supported')},l.umask=function(){return 0}},function(a){var b=function(){return this}();try{b=b||Function('return this')()||(1,eval)('this')}catch(a){'object'==typeof window&&(b=window)}a.exports=b}]);
+/******/ (function(modules) { // webpackBootstrap
+/******/ 	// install a JSONP callback for chunk loading
+/******/ 	var parentJsonpFunction = window["webpackJsonp"];
+/******/ 	window["webpackJsonp"] = function webpackJsonpCallback(chunkIds, moreModules, executeModules) {
+/******/ 		// add "moreModules" to the modules object,
+/******/ 		// then flag all "chunkIds" as loaded and fire callback
+/******/ 		var moduleId, chunkId, i = 0, resolves = [], result;
+/******/ 		for(;i < chunkIds.length; i++) {
+/******/ 			chunkId = chunkIds[i];
+/******/ 			if(installedChunks[chunkId]) {
+/******/ 				resolves.push(installedChunks[chunkId][0]);
+/******/ 			}
+/******/ 			installedChunks[chunkId] = 0;
+/******/ 		}
+/******/ 		for(moduleId in moreModules) {
+/******/ 			if(Object.prototype.hasOwnProperty.call(moreModules, moduleId)) {
+/******/ 				modules[moduleId] = moreModules[moduleId];
+/******/ 			}
+/******/ 		}
+/******/ 		if(parentJsonpFunction) parentJsonpFunction(chunkIds, moreModules, executeModules);
+/******/ 		while(resolves.length) {
+/******/ 			resolves.shift()();
+/******/ 		}
+/******/
+/******/ 	};
+/******/
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// objects to store loaded and loading chunks
+/******/ 	var installedChunks = {
+/******/ 		1: 0
+/******/ 	};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/ 	// This file contains only the entry chunk.
+/******/ 	// The chunk loading function for additional chunks
+/******/ 	__webpack_require__.e = function requireEnsure(chunkId) {
+/******/ 		var installedChunkData = installedChunks[chunkId];
+/******/ 		if(installedChunkData === 0) {
+/******/ 			return new Promise(function(resolve) { resolve(); });
+/******/ 		}
+/******/
+/******/ 		// a Promise means "currently loading".
+/******/ 		if(installedChunkData) {
+/******/ 			return installedChunkData[2];
+/******/ 		}
+/******/
+/******/ 		// setup Promise in chunk cache
+/******/ 		var promise = new Promise(function(resolve, reject) {
+/******/ 			installedChunkData = installedChunks[chunkId] = [resolve, reject];
+/******/ 		});
+/******/ 		installedChunkData[2] = promise;
+/******/
+/******/ 		// start chunk loading
+/******/ 		var head = document.getElementsByTagName('head')[0];
+/******/ 		var script = document.createElement('script');
+/******/ 		script.type = "text/javascript";
+/******/ 		script.charset = 'utf-8';
+/******/ 		script.async = true;
+/******/ 		script.timeout = 120000;
+/******/
+/******/ 		if (__webpack_require__.nc) {
+/******/ 			script.setAttribute("nonce", __webpack_require__.nc);
+/******/ 		}
+/******/ 		script.src = __webpack_require__.p + "" + chunkId + ".bundle.js";
+/******/ 		var timeout = setTimeout(onScriptComplete, 120000);
+/******/ 		script.onerror = script.onload = onScriptComplete;
+/******/ 		function onScriptComplete() {
+/******/ 			// avoid mem leaks in IE.
+/******/ 			script.onerror = script.onload = null;
+/******/ 			clearTimeout(timeout);
+/******/ 			var chunk = installedChunks[chunkId];
+/******/ 			if(chunk !== 0) {
+/******/ 				if(chunk) {
+/******/ 					chunk[1](new Error('Loading chunk ' + chunkId + ' failed.'));
+/******/ 				}
+/******/ 				installedChunks[chunkId] = undefined;
+/******/ 			}
+/******/ 		};
+/******/ 		head.appendChild(script);
+/******/
+/******/ 		return promise;
+/******/ 	};
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, {
+/******/ 				configurable: false,
+/******/ 				enumerable: true,
+/******/ 				get: getter
+/******/ 			});
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "/js/";
+/******/
+/******/ 	// on error function for async loading
+/******/ 	__webpack_require__.oe = function(err) { console.error(err); throw err; };
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = 1);
+/******/ })
+/************************************************************************/
+/******/ ([
+/* 0 */,
+/* 1 */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(2);
+module.exports = __webpack_require__(3);
+
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports) {
+
+(function(self) {
+  'use strict';
+
+  if (self.fetch) {
+    return
+  }
+
+  var support = {
+    searchParams: 'URLSearchParams' in self,
+    iterable: 'Symbol' in self && 'iterator' in Symbol,
+    blob: 'FileReader' in self && 'Blob' in self && (function() {
+      try {
+        new Blob()
+        return true
+      } catch(e) {
+        return false
+      }
+    })(),
+    formData: 'FormData' in self,
+    arrayBuffer: 'ArrayBuffer' in self
+  }
+
+  if (support.arrayBuffer) {
+    var viewClasses = [
+      '[object Int8Array]',
+      '[object Uint8Array]',
+      '[object Uint8ClampedArray]',
+      '[object Int16Array]',
+      '[object Uint16Array]',
+      '[object Int32Array]',
+      '[object Uint32Array]',
+      '[object Float32Array]',
+      '[object Float64Array]'
+    ]
+
+    var isDataView = function(obj) {
+      return obj && DataView.prototype.isPrototypeOf(obj)
+    }
+
+    var isArrayBufferView = ArrayBuffer.isView || function(obj) {
+      return obj && viewClasses.indexOf(Object.prototype.toString.call(obj)) > -1
+    }
+  }
+
+  function normalizeName(name) {
+    if (typeof name !== 'string') {
+      name = String(name)
+    }
+    if (/[^a-z0-9\-#$%&'*+.\^_`|~]/i.test(name)) {
+      throw new TypeError('Invalid character in header field name')
+    }
+    return name.toLowerCase()
+  }
+
+  function normalizeValue(value) {
+    if (typeof value !== 'string') {
+      value = String(value)
+    }
+    return value
+  }
+
+  // Build a destructive iterator for the value list
+  function iteratorFor(items) {
+    var iterator = {
+      next: function() {
+        var value = items.shift()
+        return {done: value === undefined, value: value}
+      }
+    }
+
+    if (support.iterable) {
+      iterator[Symbol.iterator] = function() {
+        return iterator
+      }
+    }
+
+    return iterator
+  }
+
+  function Headers(headers) {
+    this.map = {}
+
+    if (headers instanceof Headers) {
+      headers.forEach(function(value, name) {
+        this.append(name, value)
+      }, this)
+    } else if (Array.isArray(headers)) {
+      headers.forEach(function(header) {
+        this.append(header[0], header[1])
+      }, this)
+    } else if (headers) {
+      Object.getOwnPropertyNames(headers).forEach(function(name) {
+        this.append(name, headers[name])
+      }, this)
+    }
+  }
+
+  Headers.prototype.append = function(name, value) {
+    name = normalizeName(name)
+    value = normalizeValue(value)
+    var oldValue = this.map[name]
+    this.map[name] = oldValue ? oldValue+','+value : value
+  }
+
+  Headers.prototype['delete'] = function(name) {
+    delete this.map[normalizeName(name)]
+  }
+
+  Headers.prototype.get = function(name) {
+    name = normalizeName(name)
+    return this.has(name) ? this.map[name] : null
+  }
+
+  Headers.prototype.has = function(name) {
+    return this.map.hasOwnProperty(normalizeName(name))
+  }
+
+  Headers.prototype.set = function(name, value) {
+    this.map[normalizeName(name)] = normalizeValue(value)
+  }
+
+  Headers.prototype.forEach = function(callback, thisArg) {
+    for (var name in this.map) {
+      if (this.map.hasOwnProperty(name)) {
+        callback.call(thisArg, this.map[name], name, this)
+      }
+    }
+  }
+
+  Headers.prototype.keys = function() {
+    var items = []
+    this.forEach(function(value, name) { items.push(name) })
+    return iteratorFor(items)
+  }
+
+  Headers.prototype.values = function() {
+    var items = []
+    this.forEach(function(value) { items.push(value) })
+    return iteratorFor(items)
+  }
+
+  Headers.prototype.entries = function() {
+    var items = []
+    this.forEach(function(value, name) { items.push([name, value]) })
+    return iteratorFor(items)
+  }
+
+  if (support.iterable) {
+    Headers.prototype[Symbol.iterator] = Headers.prototype.entries
+  }
+
+  function consumed(body) {
+    if (body.bodyUsed) {
+      return Promise.reject(new TypeError('Already read'))
+    }
+    body.bodyUsed = true
+  }
+
+  function fileReaderReady(reader) {
+    return new Promise(function(resolve, reject) {
+      reader.onload = function() {
+        resolve(reader.result)
+      }
+      reader.onerror = function() {
+        reject(reader.error)
+      }
+    })
+  }
+
+  function readBlobAsArrayBuffer(blob) {
+    var reader = new FileReader()
+    var promise = fileReaderReady(reader)
+    reader.readAsArrayBuffer(blob)
+    return promise
+  }
+
+  function readBlobAsText(blob) {
+    var reader = new FileReader()
+    var promise = fileReaderReady(reader)
+    reader.readAsText(blob)
+    return promise
+  }
+
+  function readArrayBufferAsText(buf) {
+    var view = new Uint8Array(buf)
+    var chars = new Array(view.length)
+
+    for (var i = 0; i < view.length; i++) {
+      chars[i] = String.fromCharCode(view[i])
+    }
+    return chars.join('')
+  }
+
+  function bufferClone(buf) {
+    if (buf.slice) {
+      return buf.slice(0)
+    } else {
+      var view = new Uint8Array(buf.byteLength)
+      view.set(new Uint8Array(buf))
+      return view.buffer
+    }
+  }
+
+  function Body() {
+    this.bodyUsed = false
+
+    this._initBody = function(body) {
+      this._bodyInit = body
+      if (!body) {
+        this._bodyText = ''
+      } else if (typeof body === 'string') {
+        this._bodyText = body
+      } else if (support.blob && Blob.prototype.isPrototypeOf(body)) {
+        this._bodyBlob = body
+      } else if (support.formData && FormData.prototype.isPrototypeOf(body)) {
+        this._bodyFormData = body
+      } else if (support.searchParams && URLSearchParams.prototype.isPrototypeOf(body)) {
+        this._bodyText = body.toString()
+      } else if (support.arrayBuffer && support.blob && isDataView(body)) {
+        this._bodyArrayBuffer = bufferClone(body.buffer)
+        // IE 10-11 can't handle a DataView body.
+        this._bodyInit = new Blob([this._bodyArrayBuffer])
+      } else if (support.arrayBuffer && (ArrayBuffer.prototype.isPrototypeOf(body) || isArrayBufferView(body))) {
+        this._bodyArrayBuffer = bufferClone(body)
+      } else {
+        throw new Error('unsupported BodyInit type')
+      }
+
+      if (!this.headers.get('content-type')) {
+        if (typeof body === 'string') {
+          this.headers.set('content-type', 'text/plain;charset=UTF-8')
+        } else if (this._bodyBlob && this._bodyBlob.type) {
+          this.headers.set('content-type', this._bodyBlob.type)
+        } else if (support.searchParams && URLSearchParams.prototype.isPrototypeOf(body)) {
+          this.headers.set('content-type', 'application/x-www-form-urlencoded;charset=UTF-8')
+        }
+      }
+    }
+
+    if (support.blob) {
+      this.blob = function() {
+        var rejected = consumed(this)
+        if (rejected) {
+          return rejected
+        }
+
+        if (this._bodyBlob) {
+          return Promise.resolve(this._bodyBlob)
+        } else if (this._bodyArrayBuffer) {
+          return Promise.resolve(new Blob([this._bodyArrayBuffer]))
+        } else if (this._bodyFormData) {
+          throw new Error('could not read FormData body as blob')
+        } else {
+          return Promise.resolve(new Blob([this._bodyText]))
+        }
+      }
+
+      this.arrayBuffer = function() {
+        if (this._bodyArrayBuffer) {
+          return consumed(this) || Promise.resolve(this._bodyArrayBuffer)
+        } else {
+          return this.blob().then(readBlobAsArrayBuffer)
+        }
+      }
+    }
+
+    this.text = function() {
+      var rejected = consumed(this)
+      if (rejected) {
+        return rejected
+      }
+
+      if (this._bodyBlob) {
+        return readBlobAsText(this._bodyBlob)
+      } else if (this._bodyArrayBuffer) {
+        return Promise.resolve(readArrayBufferAsText(this._bodyArrayBuffer))
+      } else if (this._bodyFormData) {
+        throw new Error('could not read FormData body as text')
+      } else {
+        return Promise.resolve(this._bodyText)
+      }
+    }
+
+    if (support.formData) {
+      this.formData = function() {
+        return this.text().then(decode)
+      }
+    }
+
+    this.json = function() {
+      return this.text().then(JSON.parse)
+    }
+
+    return this
+  }
+
+  // HTTP methods whose capitalization should be normalized
+  var methods = ['DELETE', 'GET', 'HEAD', 'OPTIONS', 'POST', 'PUT']
+
+  function normalizeMethod(method) {
+    var upcased = method.toUpperCase()
+    return (methods.indexOf(upcased) > -1) ? upcased : method
+  }
+
+  function Request(input, options) {
+    options = options || {}
+    var body = options.body
+
+    if (input instanceof Request) {
+      if (input.bodyUsed) {
+        throw new TypeError('Already read')
+      }
+      this.url = input.url
+      this.credentials = input.credentials
+      if (!options.headers) {
+        this.headers = new Headers(input.headers)
+      }
+      this.method = input.method
+      this.mode = input.mode
+      if (!body && input._bodyInit != null) {
+        body = input._bodyInit
+        input.bodyUsed = true
+      }
+    } else {
+      this.url = String(input)
+    }
+
+    this.credentials = options.credentials || this.credentials || 'omit'
+    if (options.headers || !this.headers) {
+      this.headers = new Headers(options.headers)
+    }
+    this.method = normalizeMethod(options.method || this.method || 'GET')
+    this.mode = options.mode || this.mode || null
+    this.referrer = null
+
+    if ((this.method === 'GET' || this.method === 'HEAD') && body) {
+      throw new TypeError('Body not allowed for GET or HEAD requests')
+    }
+    this._initBody(body)
+  }
+
+  Request.prototype.clone = function() {
+    return new Request(this, { body: this._bodyInit })
+  }
+
+  function decode(body) {
+    var form = new FormData()
+    body.trim().split('&').forEach(function(bytes) {
+      if (bytes) {
+        var split = bytes.split('=')
+        var name = split.shift().replace(/\+/g, ' ')
+        var value = split.join('=').replace(/\+/g, ' ')
+        form.append(decodeURIComponent(name), decodeURIComponent(value))
+      }
+    })
+    return form
+  }
+
+  function parseHeaders(rawHeaders) {
+    var headers = new Headers()
+    rawHeaders.split(/\r?\n/).forEach(function(line) {
+      var parts = line.split(':')
+      var key = parts.shift().trim()
+      if (key) {
+        var value = parts.join(':').trim()
+        headers.append(key, value)
+      }
+    })
+    return headers
+  }
+
+  Body.call(Request.prototype)
+
+  function Response(bodyInit, options) {
+    if (!options) {
+      options = {}
+    }
+
+    this.type = 'default'
+    this.status = 'status' in options ? options.status : 200
+    this.ok = this.status >= 200 && this.status < 300
+    this.statusText = 'statusText' in options ? options.statusText : 'OK'
+    this.headers = new Headers(options.headers)
+    this.url = options.url || ''
+    this._initBody(bodyInit)
+  }
+
+  Body.call(Response.prototype)
+
+  Response.prototype.clone = function() {
+    return new Response(this._bodyInit, {
+      status: this.status,
+      statusText: this.statusText,
+      headers: new Headers(this.headers),
+      url: this.url
+    })
+  }
+
+  Response.error = function() {
+    var response = new Response(null, {status: 0, statusText: ''})
+    response.type = 'error'
+    return response
+  }
+
+  var redirectStatuses = [301, 302, 303, 307, 308]
+
+  Response.redirect = function(url, status) {
+    if (redirectStatuses.indexOf(status) === -1) {
+      throw new RangeError('Invalid status code')
+    }
+
+    return new Response(null, {status: status, headers: {location: url}})
+  }
+
+  self.Headers = Headers
+  self.Request = Request
+  self.Response = Response
+
+  self.fetch = function(input, init) {
+    return new Promise(function(resolve, reject) {
+      var request = new Request(input, init)
+      var xhr = new XMLHttpRequest()
+
+      xhr.onload = function() {
+        var options = {
+          status: xhr.status,
+          statusText: xhr.statusText,
+          headers: parseHeaders(xhr.getAllResponseHeaders() || '')
+        }
+        options.url = 'responseURL' in xhr ? xhr.responseURL : options.headers.get('X-Request-URL')
+        var body = 'response' in xhr ? xhr.response : xhr.responseText
+        resolve(new Response(body, options))
+      }
+
+      xhr.onerror = function() {
+        reject(new TypeError('Network request failed'))
+      }
+
+      xhr.ontimeout = function() {
+        reject(new TypeError('Network request failed'))
+      }
+
+      xhr.open(request.method, request.url, true)
+
+      if (request.credentials === 'include') {
+        xhr.withCredentials = true
+      }
+
+      if ('responseType' in xhr && support.blob) {
+        xhr.responseType = 'blob'
+      }
+
+      request.headers.forEach(function(value, name) {
+        xhr.setRequestHeader(name, value)
+      })
+
+      xhr.send(typeof request._bodyInit === 'undefined' ? null : request._bodyInit)
+    })
+  }
+  self.fetch.polyfill = true
+})(typeof self !== 'undefined' ? self : this);
+
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+//import { feed } from "./feed.js"
+//'use strict';
+
+document.getElementById('feedData').onclick = function () {
+  __webpack_require__.e/* require.ensure */(0).then((function (require) {
+    var feed = __webpack_require__(0);
+
+    feed();
+  }).bind(null, __webpack_require__)).catch(__webpack_require__.oe);
+};
+
+/***/ })
+/******/ ]);

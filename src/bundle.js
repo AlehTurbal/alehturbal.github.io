@@ -1,2 +1,10 @@
-const Promise = require('es6-promise').Promise;
-import { feed } from "./feed.js"
+//import { feed } from "./feed.js"
+//'use strict';
+
+document.getElementById('feedData').onclick = function() {
+  require.ensure(['./feed'], function(require) {
+    let feed = require('./feed');
+
+    feed();
+  });
+};
